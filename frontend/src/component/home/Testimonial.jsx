@@ -10,7 +10,7 @@ const Testimonial = () => {
             </h3>
             <p className='text-xl text-gray-600 font-normal text-center'>World-class care for everyone. Our health system offers unmatched, expert health care</p>
         </div>
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-9'>
+        <div className='grid grid-cols-1 md:grid-cols-1 gap-9'>
             <TestimonialComponent />
         </div>
         

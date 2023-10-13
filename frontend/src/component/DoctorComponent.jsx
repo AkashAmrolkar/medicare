@@ -1,5 +1,5 @@
 import React from 'react'
-import star from '../assets/images/Star.png'
+import star from '../assets/images/star.png'
 import { BsArrowRight } from 'react-icons/bs'
 
 const DoctorComponent = ({data}) => {

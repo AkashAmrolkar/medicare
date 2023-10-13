@@ -1,52 +1,73 @@
 import React from 'react'
-import { Pagination } from 'swiper'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/css'
-import 'swiper/css/pagination'
-import patientAvatar from '../assets/images/patient-avatar.png'
-import Star from '../assets/images/Star.png'
+import { Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+const reviews = [
+  {
+  'name': 'Akash Amrolkar',
+  'comment': 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+  },
+  {
+    'name': 'Vaibhav Patil',
+    'comment': 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+  },
+  {
+    'name': 'Pratik Mali',
+    'comment': 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+  },
+  {
+    'name': 'Akash Amrolkar',
+    'comment': 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'
+  },
+
+]
+import patientAvatar from '../assets/images/patient-avatar.png';
+import Star from '../assets/images/star.png'
 const TestimonialComponent = () => {
   return (
-    <div className='mt-[30px] lg:mt-[55px]'>
-      <Swiper 
-        modules={[Pagination]}
-        spaceBetween={30}
-        slidesPerView={1}
-        pagination={{clickable: true}}
-        breakpoints={{
-          640: {
-            slidesPerView: 1,
-            spaceBetween: 0,
-          },
-          768: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
-          1024: {
-            slidesPerView: 3,
-            spaceBetween: 30,
-          },
-        }}
+    <div>
+      <Swiper
+        modules={[Navigation, Pagination]}
+        spaceBetween={50}
+        slidesPerView={3}
+        navigation
+        pagination={{ clickable: true }}
+        onSwiper={(swiper) => console.log(swiper)}
+        onSlideChange={() => console.log('slide change')}
       >
-        <SwiperSlide>
+      {
+        reviews.map((review, key)=>{
+          return(
+            <SwiperSlide key={key}>
           <div className='py-[30px] px-5 rounded-3'>
-            <div className='flex items-center gap-[15px]'>
+            <div className='flex items-center gap-[15px] mb-4'>
               <img src={patientAvatar} alt="Patient Avatar" />
-              <h4 className='text-[18px] leading-[30px] font-semibold text-black'>
-                Akash Amrolkar
-              </h4>
-              <div className='flex items-center gap-[24px]'>
-                <Star className='text-yellow-300 w-[18px] h-5' />
-                <Star className='text-yellow-300 w-[18px] h-5' />
-                <Star className='text-yellow-300 w-[18px] h-5' />
-                <Star className='text-yellow-300 w-[18px] h-5' />
-                <Star className='text-yellow-300 w-[18px] h-5' />
+              <div className='flex flex-col gap-2'>
+                <h4 className='text-[18px] leading-[30px] font-semibold text-black'>
+                  {review.name}
+                </h4>
+                <div className='flex items-center gap-2'>
+                  <img src={Star} alt="star" width={18} height='auto' />
+                  <img src={Star} alt="star" width={18} height='auto' />
+                  <img src={Star} alt="star" width={18} height='auto' />
+                  <img src={Star} alt="star" width={18} height='auto' />
+                  <img src={Star} alt="star" width={18} height='auto' />
+                </div>
               </div>
             </div>
-          
+            <p>{review.comment}</p>
           </div>
         </SwiperSlide>
+          )
+        })
+      }
       </Swiper>
+
     </div>
   )
 }

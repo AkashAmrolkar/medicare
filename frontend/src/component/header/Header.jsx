@@ -21,11 +21,11 @@ const navlinks =[
   },
   {
     name: "Find Doctor",
-    link: "/find-doctor"
+    link: "/doctors"
   },
   {
     name: "SignUp",
-    link: "/signup"
+    link: "/register"
   },
 ]
 

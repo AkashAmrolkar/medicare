@@ -5,8 +5,8 @@ import Contact from '../pages/Contact'
 import Login from '../pages/Login'
 import Services from '../pages/Services'
 import SignUp from '../pages/SignUp'
-import Doctors from '../pages/Doctors/Doctors'
-import DoctorDetails from '../pages//Doctors/DoctorDetails'
+import Doctors from '../pages/doctors/Doctors'
+import DoctorDetails from '../pages/doctors/DoctorDetails'
 
 import { Routes, Route } from 'react-router-dom'
 
