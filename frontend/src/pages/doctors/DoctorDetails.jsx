@@ -16,7 +16,7 @@ const DoctorDetails = () => {
                   <h3 className='text-headingColor text-[22px] font-bold'>Muhibur Rahman</h3>
                 </div>
               </div>
-            </div>
+            </div>   
           </div>
         </div>
       </section>
