@@ -1,6 +1,8 @@
-import React from 'react'
+import React, {useState} from 'react'
 import doctorImg from '../../assets/images/doctor-img02.png'
+import star from '../../assets/images/star.png'
 const DoctorDetails = () => {
+  const [tab, setTab] = ('about')
   return (
     <>
       <section className='py-10'>
@@ -14,10 +16,22 @@ const DoctorDetails = () => {
                 <div className='flex flex-col gap-4'>
                   <span className='bg-[#ccf0f3] text-irisBlueColor py-1 px-6 lg:py-2 lg:px-6 text-[12px] leading-4 lg:text-[16px] lg:leading-7 font-semibold rounded'>Surgeon</span>
                   <h3 className='text-headingColor text-[22px] font-bold'>Muhibur Rahman</h3>
+                  <img src={star } />
                 </div>
+              </div>
+
+              <div className='mt-[50px] border-b border-solid border-#0066ff34'>
+                <button
+                onClick={()=> setTab('about')}
+                className={`${tab==='about' && 'border-b border-solid border-#0066ff34'} py-2 px-5 text-[16px] leading-7 text-headingColor font-semibold`}>About</button>
+                <button
+                onClick={()=> setTab('feedback')}
+                className={`${tab==='about' && 'border-b border-solid border-#0066ff34'} py-2 px-5 text-[16px] leading-7 text-headingColor font-semibold`}>Feedback</button>
               </div>
             </div>   
           </div>
+
+          
         </div>
       </section>
     </>
