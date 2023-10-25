@@ -26,6 +26,27 @@ const DoctorsAbout = () => {
                 </li>
             </ul>
         </div>
+
+        <div className=''>
+            <h3 className='text-[20px] leading-5 text-gray-800 font-semibold'>Experience</h3>
+            <ul className='grid sm:grid-cols-2 gap-[30px] pt-4 md:p-5'>
+                <li className='p-4 rounded bg-[#fff9ea]'>
+                    <span className=' text-yellow-500 text-[15px] leading-6 font-semibold'>
+                        {formateDate('07-04-2012')} - {formateDate('05-05-2014')}
+                    </span>
+                    <p className='text-[15px] leading-4 font-medium text-gray-700 mt-2 mb-1'>Sr.Surgeon</p>
+                    <p className='text-[14px] leading-5 font-medium text-gray-700 mb-1'>New Apollo Hospital, New York</p>
+                </li>
+
+                <li className='p-4 rounded bg-[#fff9ea]'>
+                    <span className=' text-yellow-500 text-[15px] leading-6 font-semibold'>
+                        {formateDate('07-04-2012')} - {formateDate('05-05-2014')}
+                    </span>
+                    <p className='text-[15px] leading-4 font-medium text-gray-700 mt-2 mb-1'>Sr.Surgeon</p>
+                    <p className='text-[14px] leading-5 font-medium text-gray-700 mb-1'>New Apollo Hospital, New York</p>
+                </li>
+            </ul>
+        </div>
         
     </div>
   )
