@@ -2,7 +2,11 @@ import React from 'react'
 
 const signUp = () => {
   return (
-    <div>signUp</div>
+    <div className='container mx-auto'>
+      <form action=''>
+        
+      </form>
+    </div>
   )
 }
 
