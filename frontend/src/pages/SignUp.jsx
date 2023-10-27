@@ -16,9 +16,30 @@ const signUp = () => {
       [e.target.name] : e.target.value
     })
   }
+  
+  const handleSubmit = async(val) =>{
+    try {
+      const response = await fetch('/api/submitData', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(val),
+      });
+  
+      if (response.status === 200) {
+        // Data was successfully saved
+        // You can add further handling here
+      } else {
+        // Handle errors
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
   return (
     <div className='container mx-auto h-[70vh] flex justify-center items-center'>
-      <form action='' className='flex flex-col justify-center items-center gap-4 bg-white shadow px-10 py-12 w-fit mx-auto'>
+      <form action='' onSubmit={handleSubmit} className='flex flex-col justify-center items-center gap-4 bg-white shadow px-10 py-12 w-fit mx-auto'>
         <div className='filed mb-4 flex flex-col gap-2'>
           <label htmlFor='first_name'>First Name:</label>
           <input className='h-10 border px-3 border-teal-500 rounded-3xl' id='first_name' type='text' value={val.first_name} onChange={handleChange} name='first_name' placeholder='First Name' required />
