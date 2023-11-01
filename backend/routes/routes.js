@@ -1,6 +1,10 @@
-const express = require('express');
+//const express = require('express');
+import express from 'express';
+import Users from '../model/user.js';
+
 const router = express.Router();
-const Users = require('../model/user')
+//const Users = require('../model/user')
+
 
 // POST route to save form data to MongoDB
 router.post('/submit', (req, res) => {
@@ -23,4 +27,4 @@ router.post('/submit', (req, res) => {
     });
 });
 
-module.exports = router;
+export default router;

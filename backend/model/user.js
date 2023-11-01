@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-
+//const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const formEntrySchema = new mongoose.Schema({
   // Define your data structure here
   firstname: String,
@@ -12,4 +12,5 @@ const formEntrySchema = new mongoose.Schema({
 
 const Users = mongoose.model('Users', formEntrySchema);
 
-module.exports = Users;
+
+export default Users;
