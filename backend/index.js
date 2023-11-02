@@ -3,7 +3,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv'
-import { getAllUsers, registerUser } from './controller/user-controller.js';
+import { getAllUsers, login, registerUser } from './controller/user-controller.js';
 //import router from './routes/routes.js';
 //const formRoutes = require('./routes/routes')
 
@@ -20,6 +20,7 @@ app.use('/api/users', router)
 // Users Routes
 router.get('/', getAllUsers);
 router.post('/register', registerUser);
+router.post('/login', login);
 
 mongoose.connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
