@@ -18,7 +18,7 @@ const SignUp = () => {
       [e.target.name]: e.target.value
     })
   }
-  console.log(FormData)
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -30,10 +30,11 @@ const SignUp = () => {
         body: JSON.stringify(FormData),
       });
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         // Data was successfully saved
-        console("data updated");
+        console.log("data updated");
         // You can add further handling here
+        alert("Successfully registered..!!");
       } else {
         // Handle errors
       }

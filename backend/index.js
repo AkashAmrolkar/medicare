@@ -3,7 +3,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv'
-import { getAllUsers, login, registerUser } from './controller/user-controller.js';
+import { getAllUsers, login, registerUser } from './controller/authController.js';
 //import router from './routes/routes.js';
 //const formRoutes = require('./routes/routes')
 

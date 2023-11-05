@@ -74,7 +74,7 @@ export const registerUser = async (req, res, next) => {
 }
 
 export const login = async (req, res, next) => {
-    const {email, password} = req.body;
+    const {email} = req.body;
     try {
         let user;
         const patient = await Users.findOne({email});
@@ -90,7 +90,7 @@ export const login = async (req, res, next) => {
             return res.status(404).json({message: "User not found"})
         }
 
-        const isPassMatch = await bcrypt.compare(password, user.password);
+        const isPassMatch = await bcrypt.compare(req.body.password, user.password);
 
         if(!isPassMatch){
             return res.status(400).json({message: "Invalid Credentials"})
@@ -110,3 +110,5 @@ export const login = async (req, res, next) => {
     }
     
 }
+
+
