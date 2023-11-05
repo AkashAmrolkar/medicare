@@ -10,18 +10,18 @@ const generateToken = user =>{
     })
 } 
 
-export const getAllUsers = async (req, res, next) => {
-    let user;
-    try {
-        user = await Users.find()
-    } catch (error) {
-        console.log(error)
-    }
-    if (!user) {
-        return res.status(404).json({ message: "No user found" })
-    }
-    return res.status(200).json({ user })
-}
+// export const getAllUsers = async (req, res, next) => {
+//     let user;
+//     try {
+//         user = await Users.find()
+//     } catch (error) {
+//         console.log(error)
+//     }
+//     if (!user) {
+//         return res.status(404).json({ message: "No user found" })
+//     }
+//     return res.status(200).json({ user })
+// }
 
 export const registerUser = async (req, res, next) => {
     const { email,password,name, role, gender, photo } = req.body;
