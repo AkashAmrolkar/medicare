@@ -5,6 +5,8 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv'
 import { login, registerUser } from './controller/authController.js';
 import { deleteUser, getAllUsers, getSingleUser, updateUser } from './controller/userController.js';
+import { deleteDoctor, getAllDoctors, getSingleDoctor, updateDoctor } from './controller/doctorController.js';
+
 //import router from './routes/routes.js';
 //const formRoutes = require('./routes/routes')
 
@@ -33,6 +35,13 @@ userRouter.get('/:id', getSingleUser)
 userRouter.get('/', getAllUsers)
 userRouter.put('/:id', updateUser)
 userRouter.get('/:id', deleteUser)
+
+// Doctors Routes
+
+docRouter.get('/:id', getSingleDoctor)
+docRouter.get('/', getAllDoctors)
+docRouter.put('/:id', updateDoctor)
+docRouter.get('/:id', deleteDoctor)
 
 mongoose.connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
