@@ -43,16 +43,16 @@ const SignUp = () => {
     }
   }
   return (
-    <div className='container mx-auto h-screen flex items-center'>
-      <div className=' grid grid-cols-2 items-center'>
-        <div>
-          <img src={signUpImg} alt="signup" width='auto' height='auto' className=' w-full mx-auto' />
+    <div className='container mx-auto h-screen sm:h-full flex items-center'>
+      <div className=' grid sm:grid-cols-1 md:grid-cols-2 items-center w-full'>
+        <div className='w-full block sm:hidden'>
+          <img src={signUpImg} alt="signup" width='auto' height='auto' className='w-full mx-auto' />
         </div>
-        <div>
-          <form action='' onSubmit={handleSubmit} className='flex flex-col justify-center items-center gap-4 bg-white shadow px-10 py-12 w-full mx-auto'>
+        <div className='w-full'>
+          <form action='' onSubmit={handleSubmit} className='flex flex-col justify-center items-center gap-4 bg-white shadow sm:px-2 md:px-10 py-12 w-full mx-auto'>
             <div className='filed mb-4 flex flex-col gap-2'>
               <label htmlFor='email'>Email:</label>
-              <input className='h-10 border px-3 border-teal-500 rounded-3xl w-full' id='email' type='email' value={FormData.email} onChange={handleChange} name='email' placeholder='test@gmail.com' required />
+              <input className='h-10 border px-3 border-teal-500 rounded-3xl w-full' id='email' type='email' value={FormData.email} onChange={handleChange} name='email' placeholder='test@gmail.com' autoComplete='false' required />
             </div>
             <div className='filed mb-4 flex flex-col gap-2'>
               <label htmlFor='password'>Password</label>
@@ -86,7 +86,7 @@ const SignUp = () => {
               <input className='h-10 px-3' id='profileimg' type='file' value={FormData.profileimg} onChange={handleChange} name='profileimg' />
             </div>
 
-            <button type='submit' className=' bg-teal-500 border border-transparent rounded-3xl text-xl font-medium text-white px-8 py-2'>Login</button>
+            <button type='submit' className=' bg-blue-600 border border-transparent rounded-3xl text-xl font-medium text-white float-left px-8 py-2'>Login</button>
           </form>
         </div>
       </div>

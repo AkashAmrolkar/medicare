@@ -83,7 +83,7 @@ const Header = () => {
                   </figure>
                 </Link>
               </div>
-              <Link to={'/'}>
+              <Link to={'/login'}>
                 <button className='bg-blue-600 px-4 py-2 text-white flex justify-center rounded-[50px] font-bold'>Login</button>
               </Link>
               

@@ -6,6 +6,7 @@ import dotenv from 'dotenv'
 import { login, registerUser } from './controller/authController.js';
 import { deleteUser, getAllUsers, getSingleUser, updateUser } from './controller/userController.js';
 import { deleteDoctor, getAllDoctors, getSingleDoctor, updateDoctor } from './controller/doctorController.js';
+import { authenticate, restrict } from './auth/VerifyToken.js';
 
 //import router from './routes/routes.js';
 //const formRoutes = require('./routes/routes')
@@ -31,7 +32,7 @@ authRouter.post('/login', login);
 
 // Users Routes
 
-userRouter.get('/:id', getSingleUser)
+userRouter.get('/:id',authenticate, restrict(['patient']), getSingleUser)
 userRouter.get('/', getAllUsers)
 userRouter.put('/:id', updateUser)
 userRouter.get('/:id', deleteUser)
