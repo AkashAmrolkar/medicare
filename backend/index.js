@@ -7,6 +7,7 @@ import { login, registerUser } from './controller/authController.js';
 import { deleteUser, getAllUsers, getSingleUser, updateUser } from './controller/userController.js';
 import { deleteDoctor, getAllDoctors, getSingleDoctor, updateDoctor } from './controller/doctorController.js';
 import { authenticate, restrict } from './auth/VerifyToken.js';
+import { createReviews, getAllReviews } from './controller/reviewController.js';
 
 //import router from './routes/routes.js';
 //const formRoutes = require('./routes/routes')
@@ -18,12 +19,14 @@ dotenv.config()
 const authRouter = express.Router()
 const userRouter = express.Router()
 const docRouter = express.Router()
+const reviewRouter = express.Router({mergeParams: true})
 
 app.use(express.json())
 app.use(cors()); 
 app.use('/api/auths', authRouter)
 app.use('/api/users', userRouter)
 app.use('/api/doctors', docRouter)
+app.use('/api/reviews', reviewRouter)
 
 // Auth Routes
 //authRouter.get('/', getAllUsers);
@@ -39,10 +42,15 @@ userRouter.delete('/:id', authenticate, restrict(['patient']), deleteUser)
 
 // Doctors Routes
 
+docRouter.use('/:doctorID/reviews', reviewRouter)
 docRouter.get('/:id', authenticate, restrict(['patient']), getSingleDoctor)
 docRouter.get('/', authenticate, restrict(['admin']), getAllDoctors)
 docRouter.put('/:id', authenticate, restrict(['patient']), updateDoctor)
 docRouter.delete('/:id', authenticate, restrict(['patient']), deleteDoctor)
+
+
+//Reviews Routes
+reviewRouter.get('/', getAllReviews).post(authenticate, restrict(['patient']), createReviews)
 
 mongoose.connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
