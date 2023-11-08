@@ -54,7 +54,7 @@ export const registerUser = async (req, res, next) => {
         })
     }
     if(role==='doctor'){
-        newUser = new Users({
+        newUser = new Doctor({
             email,
             password:hashPass,
             name,

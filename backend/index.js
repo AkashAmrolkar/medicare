@@ -8,7 +8,7 @@ import { deleteUser, getAllUsers, getSingleUser, updateUser } from './controller
 import { deleteDoctor, getAllDoctors, getSingleDoctor, updateDoctor } from './controller/doctorController.js';
 import { authenticate, restrict } from './auth/VerifyToken.js';
 import { createReviews, getAllReviews } from './controller/reviewController.js';
-
+//import reviewRouter from './routes/review.js';
 //import router from './routes/routes.js';
 //const formRoutes = require('./routes/routes')
 
@@ -42,7 +42,7 @@ userRouter.delete('/:id', authenticate, restrict(['patient']), deleteUser)
 
 // Doctors Routes
 
-docRouter.use('/:doctorID/reviews', reviewRouter)
+docRouter.use('/:doctorId/reviews', reviewRouter)
 docRouter.get('/:id', authenticate, restrict(['patient']), getSingleDoctor)
 docRouter.get('/', authenticate, restrict(['admin']), getAllDoctors)
 docRouter.put('/:id', authenticate, restrict(['patient']), updateDoctor)
@@ -51,6 +51,7 @@ docRouter.delete('/:id', authenticate, restrict(['patient']), deleteDoctor)
 
 //Reviews Routes
 reviewRouter.get('/', getAllReviews).post(authenticate, restrict(['patient']), createReviews)
+
 
 mongoose.connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
