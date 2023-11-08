@@ -32,17 +32,17 @@ authRouter.post('/login', login);
 
 // Users Routes
 
-userRouter.get('/:id',authenticate, restrict(['patient']), getSingleUser)
-userRouter.get('/', getAllUsers)
-userRouter.put('/:id', updateUser)
-userRouter.get('/:id', deleteUser)
+userRouter.get('/:id', authenticate, restrict(['patient']), getSingleUser)
+userRouter.get('/', authenticate, restrict(['admin']), getAllUsers)
+userRouter.put('/:id', authenticate, restrict(['patient']), updateUser)
+userRouter.delete('/:id', authenticate, restrict(['patient']), deleteUser)
 
 // Doctors Routes
 
-docRouter.get('/:id', getSingleDoctor)
-docRouter.get('/', getAllDoctors)
-docRouter.put('/:id', updateDoctor)
-docRouter.get('/:id', deleteDoctor)
+docRouter.get('/:id', authenticate, restrict(['patient']), getSingleDoctor)
+docRouter.get('/', authenticate, restrict(['admin']), getAllDoctors)
+docRouter.put('/:id', authenticate, restrict(['patient']), updateDoctor)
+docRouter.delete('/:id', authenticate, restrict(['patient']), deleteDoctor)
 
 mongoose.connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
