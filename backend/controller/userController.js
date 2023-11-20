@@ -1,6 +1,5 @@
 
 import Users from "../model/UserSchema.js";
-import Doctor from "../model/DoctorSchema.js"
 
 export const updateUser = async (req, res, next) => {
     const id = req.params.id;

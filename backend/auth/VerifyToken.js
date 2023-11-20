@@ -41,7 +41,6 @@ export const restrict = roles => async(req, res, next) =>{
     }
     if(!roles.includes(user.role)){
         res.status(401).json({message: "You are not authorized"})
-
     }
     next();
 }
