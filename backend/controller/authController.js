@@ -74,11 +74,12 @@ export const registerUser = async (req, res, next) => {
 }
 
 export const login = async (req, res, next) => {
-    const {email} = req.body;
+    const {username} = req.body;
+    console.log("username: ", username)
     try {
         let user;
-        const patient = await Users.findOne({email});
-        const doctor = await Doctor.findOne({email});
+        const patient = await Users.findOne({email:username});
+        const doctor = await Doctor.findOne({email:username});
         if(patient){
             user = patient
         }
@@ -97,6 +98,7 @@ export const login = async (req, res, next) => {
         }
 
         const token = generateToken(user);
+        console.log("Token", token)
 
         const {password, role, appointments, ...rest} = user._doc
 
