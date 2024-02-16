@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import signUpImg from '../assets/images/signup.gif'
+import SignupForm from '../component/SignupForm'
 const SignUp = () => {
   const [FormData, setFormData] = useState({
 
+    firstName: '',
+    lastName: '',
     email: '',
+    phone: '',
     password: '',
-    name: '',
-    role: '',
-    gender: '',
-    photo: ''
   })
 
   const handleChange = (e) => {
@@ -44,6 +44,15 @@ const SignUp = () => {
   }
   return (
     <div className='container mx-auto h-screen sm:h-full flex items-center'>
+
+      <div className=' w-full md:w-[80%] mx-auto flex items-center justify-center'>
+        <div className='w-full'>
+          <img src={signUpImg} alt="signup" width='auto' height='auto' className='w-full mx-auto' />
+        </div>
+        <div>
+          <SignupForm />
+        </div>
+      </div>
       <div className=' grid sm:grid-cols-1 md:grid-cols-2 items-center w-full'>
         <div className='w-full block sm:hidden'>
           <img src={signUpImg} alt="signup" width='auto' height='auto' className='w-full mx-auto' />
