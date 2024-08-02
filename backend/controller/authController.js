@@ -1,114 +1,67 @@
 import jwt from 'jsonwebtoken'
-import bcrypt from 'bcryptjs'
+import dotenv from 'dotenv'
 
-import Users from "../model/UserSchema.js";
-import Doctor from "../model/DoctorSchema.js"
+dotenv.config()
 
-const generateToken = user =>{
-    return jwt.sign({id: user._id, role: user.role}, process.env.JWT_SECRET_KEY, {
-        expiresIn: '15d',
-    })
-} 
+import User from "../model/UserSchema.js";
 
-// export const getAllUsers = async (req, res, next) => {
-//     let user;
-//     try {
-//         user = await Users.find()
-//     } catch (error) {
-//         console.log(error)
-//     }
-//     if (!user) {
-//         return res.status(404).json({ message: "No user found" })
-//     }
-//     return res.status(200).json({ user })
-// }
+import { generateAccessToken, generateRefreshToken } from '../utils/jwt.js';
 
-export const registerUser = async (req, res, next) => {
-    const { email,password,name, role, gender, photo } = req.body;
-    let user;
+export const register = async (req, res) => {
     try {
-        if(role==='patient'){
-            user = await Users.findOne({ email })
+        const { fullName, email, phone, password } = req.body;
+
+        const user = await User.findOne({email})
+        if(user){
+            return res.status(404).json({message: 'User already exist'})
         }
-        if(role==='doctor'){
-            user = await Doctor.findOne({ email })
-        }
-        
+
+        const newUser = new User({
+            fullName, email, phone, password
+        })
+        console.log(newUser)
+        await newUser.save()
+        const accessToken = generateAccessToken(newUser)
+        const refreshToken = generateRefreshToken(newUser)
+        res.cookie('refreshToken', refreshToken, {httpOnly: true, secure: true})
+        //res.json({accessToken})
+        return res.status(201).json({message: 'User Created Successfully..!', accessToken})
+
     } catch (error) {
         console.log(error)
     }
-    if (user) {
-        res.status(404).json({ message: "User already registered" });
-    }
-    const salt = await bcrypt.genSalt(10);
-    const hashPass = await bcrypt.hash(password, salt)
-    let newUser
-    if(role==='patient'){
-        newUser = new Users({
-            email,
-            password:hashPass,
-            name,
-            role,
-            gender,
-            photo
-        })
-    }
-    if(role==='doctor'){
-        newUser = new Doctor({
-            email,
-            password:hashPass,
-            name,
-            role,
-            gender,
-            photo
-        })
-    }
-    try {
-
-        newUser.save();
-        console.log("User added successfully..!!")
-    } catch (error) {
-        console.log("Establishing error while registering")
-    }
-    return res.status(201).json({ Users })
 }
 
-export const login = async (req, res, next) => {
-    const {username} = req.body;
-    console.log("username: ", username)
+export const login = async (req, res) => {
     try {
-        let user;
-        const patient = await Users.findOne({email:username});
-        const doctor = await Doctor.findOne({email:username});
-        if(patient){
-            user = patient
-        }
-        if(doctor){
-            user = doctor
-        }
-
+        const {email, password} = req.body
+        const user = await User.findOne({email})
         if(!user){
-            return res.status(404).json({message: "User not found"})
+            return res.status(404).json({message: 'Invaid User..!'})
         }
-
-        const isPassMatch = await bcrypt.compare(req.body.password, user.password);
-
-        if(!isPassMatch){
-            return res.status(400).json({message: "Invalid Credentials"})
+        if(user && user.matchPassword(password)){
+            const accessToken = generateAccessToken(user)
+            const refreshToken = generateRefreshToken(user)
+            res.cookie('refreshToken', refreshToken, {httpOnly: true, secure: true})
+            res.json({accessToken})
         }
-
-        const token = generateToken(user);
-        console.log("Token", token)
-
-        const {password, role, appointments, ...rest} = user._doc
-
-        //console.log(res.status());
-
-        res.status(201).json({message: "Succeefully login", token, data: {...rest, role}})
-        
-        
     } catch (error) {
-        return res.status(404).json({message: "Login Failed"})
+        console.log(error)
     }
-    
+}
+
+export const refreshToken = async (req,res)=>{
+    const refreshToken = req.cookies.refreshToken;
+    if(!refreshToken) {
+        return res.status(401).json({message: 'Token Invalid'})
+    }
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user)=>{
+        if(err){
+            console.log(err);
+            return res.status(400).json({message: 'Error in verifying refresh token'})
+        }
+
+        const accessToken = generateAccessToken(user);
+        res.json({accessToken})
+    })
 }
