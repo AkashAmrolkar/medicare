@@ -1,44 +1,82 @@
 import mongoose from "mongoose";
 
-const DoctorSchema = new mongoose.Schema({
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  name: { type: String, required: true },
-  phone: { type: Number },
-  photo: { type: String },
-  ticketPrice: { type: Number },
-  role: {
+const experienceSchema = new mongoose.Schema({
+  title: {
     type: String,
+    required: true,
   },
-
-  // Fields for doctors only
-  specialization: { type: String },
-  qualifications: {
-    type: Array,
+  hospital: {
+    type:String,
+    required: true,
   },
-
-  experiences: {
-    type: Array,
-  },
-
-  bio: { type: String, maxLength: 50 },
-  about: { type: String },
-  timeSlots: { type: Array },
-  reviews: [{ type: mongoose.Types.ObjectId, ref: "Review" }],
-  averageRating: {
+  yearOfExperience: {
     type: Number,
-    default: 0,
+    required: true,
   },
-  totalRating: {
-    type: Number,
-    default: 0,
-  },
-  isApproved: {
+  employmentType: {
     type: String,
-    enum: ["pending", "approved", "cancelled"],
-    default: "pending",
+    enum: ["Part Time", "Full Time"],
   },
-  appointments: [{ type: mongoose.Types.ObjectId, ref: "Appointment" }],
+  startDate: {
+    type: Date,
+    required: true,
+  },
+  endDate: {
+    type: Date,
+  }
+})
+
+const educationSchema = new mongoose.Schema({
+  institute: {
+    type: String,
+    required: true
+  },
+  course: {
+    type: String,
+    required: true
+  },
+  startDate: {
+    type: Date,
+    required: true,
+  },
+  endDate: {
+    type: Date,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true
+  },
+
+})
+
+const awardSchema = new mongoose.Schema({
+  name: {
+    type:String,
+    required: true,
+  },
+  date: {
+    type: Date,
+    required: true,
+  },
+  description: {
+    type:String,
+    required: true,
+  },
 });
 
-export default mongoose.model("Doctors", DoctorSchema);
+const doctorSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  designation: {
+    type:String,
+    required: true,
+  },
+  experience: [experienceSchema],
+  education: [educationSchema],
+  awards: [awardSchema]
+});
+
+export default mongoose.model("Doctor", doctorSchema);

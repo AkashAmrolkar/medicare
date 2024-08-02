@@ -1,0 +1,130 @@
+	[css.style require_once="footer_2"]
+		.footer_2{
+    	.form_field{
+      	display: flex;
+        position: relative;
+        input{
+        	border: 1px solid #353535;
+          border-radius: 9px;
+          ::placeholder {
+            color: #a0a0a0;
+            font-size: 16px;
+            padding: 10px;
+          }
+        }
+        .signup_btn{
+        	border-radius: 9px;
+          position: relative;
+          left: -9px;
+        }
+      }
+      .navbar-collapse{
+      	padding:0px;
+        .menu{
+        	.menu-item {
+            width: 100%;
+            a{
+            	padding: 0;
+              margin-bottom: 15px;
+              color: #a0a0a0;
+              font-size: 16px;
+            }
+          }
+        }
+      }
+    }
+  [/css.style]
+	<footer class="uiblock footer_2 site-footer brand-primary-bg">
+  	<div class="container pad-y-10 m-sm-bottom">
+    	<div class="row justify-content-between">
+      	<div class="col-12 col-md-4 mar-b-6 no-margin-bottom-lg">
+        	<p class="brand-white font-size-big">WE ARE FERRATO</p>
+          <p class="gray font-size-big">we promise not to spam you!</p>
+          <div>
+          	<p class="brand-white font-size-big"><span>PHONE: </span><a href="tel:1800 123 3333">1800 123 3333(TOLL FREE)</a></p>
+          </div>
+          <div>
+          	<form>
+            	<div class="form_field">
+            		<input type="email" name="signup" class="gray-light-bg" placeholder="Enter your email ID">
+              	<button class="btn brand-white-bg pad-y-2 pad-x-5 signup_btn" type="submit">Sign up</button>              
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-12 col-md-8">
+        	<div class="row">
+          	<div class="col-3 mar-b-5 no-margin-bottom-md">
+              <h5 class="font-size-big font-medium brand-white mar-b-3">WHO WE ARE?</h5>
+              [wp.menu]
+              {
+                "theme_location": "footer_menu_first",
+                "echo":false,
+                "walker":true
+              }
+              [/wp.menu]
+            </div>
+            <div class="col-3 mar-b-5 no-margin-bottom-md">
+              <h5 class="font-size-big font-medium brand-white mar-b-3">OUR PRODUCTS</h5>
+              [wp.menu]
+              {
+                "theme_location": "footer_menu_second",
+                "echo":false,
+                "walker":true
+              }
+              [/wp.menu]
+            </div>
+            <div class="col-3 mar-b-5 no-margin-bottom-sm">
+              <h5 class="font-size-big font-medium brand-white mar-b-3">OUR POLICIES</h5>
+              [wp.menu]
+              {
+                "theme_location": "footer_menu_third",
+                "echo":false,
+                "walker":true
+              }
+              [/wp.menu]
+            </div>
+            <div class="col-3 mar-b-5 no-margin-bottom-sm">
+              <h5 class="font-size-big font-medium brand-white mar-b-3">STORE LOCATOR</h5>
+              [wp.menu]
+              {
+                "theme_location": "footer_menu_fourth",
+                "echo":false,
+                "walker":true
+              }
+              [/wp.menu]
+            </div>
+          </div>
+        	
+        </div>
+      </div>
+    </div>
+    <div class="container">
+    	<div class="is-flex justify-content-center footer-cr is-relative">
+ 				<div class="social-icons-wrapper is-inline-flex align-items-center">
+        
+              <a href="[env.settings.facebook-link /]" target="_blank" class="social-icon mar-x-1 " aria-label="facebook link" rel="noopener">
+                  <i class="social_icon_class is-flex align-items-center justify-content-center [aw2.get @social_icon.item.icon_class /]"></i>
+                  <img src="[env.settings.facebook-icon /]" alt="facebook icon" width="42" class="social_icon_image">
+              </a>
+             //** <a href="[env.settings.twitter-link /]" target="_blank" class="social-icon mar-x-1 " aria-label="twitter link" rel="noopener">
+                  <i class="social_icon_class is-flex align-items-center justify-content-center [aw2.get @social_icon.item.icon_class /]"></i>
+                  <img src="[env.settings.twitter-icon /]" alt="twitter icon" width="42" class="social_icon_image">
+              </a>**//
+              <a href="[env.settings.linkdin-link /]" target="_blank" class="social-icon mar-x-1 " aria-label="linkdin link" rel="noopener">
+                  <i class="social_icon_class is-flex align-items-center justify-content-center [aw2.get @social_icon.item.icon_class /]"></i>
+                  <img src="[env.settings.linkdin-icon /]" alt="linkdin icon" width="42" class="social_icon_image">
+              </a>
+             //** <a href="[env.settings.youtube-link /]" target="_blank" class="social-icon mar-x-1 " aria-label="youtube link" rel="noopener"> 
+                  <i class="social_icon_class is-flex align-items-center justify-content-center [aw2.get @social_icon.item.icon_class /]"></i>
+                  <img src="[env.settings.youtube-icon /]" alt="youtube icon" width="42" class="social_icon_image">
+              </a>**//
+           
+          </div>
+    	</div>
+      <div class="is-flex justify-content-between flex-wrap pad-y-4 font-size-small text-center">
+       	<p class="no-margin-bottom bottom-color">Copyright © 2024. All Rights Reserved.</p>
+        <a href="https://www.wpoets.com/" target="_blank" class="font-size-small bottom-color" rel="noopener">Part of Awesome Website Program</a>
+      </div>
+    </div>
+  </footer>

@@ -4,7 +4,7 @@ const bookingSchema = new mongoose.Schema(
   {
     doctor: {
       type: mongoose.Types.ObjectId,
-      ref: "Doctor",
+      ref: "User",
       required: true,
     },
     user: {
@@ -12,13 +12,21 @@ const bookingSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    ticketPrice: { type: String, required: true },
+    ticketPrice: { 
+      type: String, 
+      required: true 
+    },
     appointmentDate: {
       type: Date,
       required: true,
     },
+    appointmentTime: {
+      type: String,
+      required: true
+  } ,
     status: {
       type: String,
+      required: true,
       enum: ["pending", "approved", "cancelled"],
       default: "pending",
     },
