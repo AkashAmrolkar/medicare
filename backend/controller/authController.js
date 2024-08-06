@@ -19,7 +19,6 @@ export const register = async (req, res) => {
         const newUser = new User({
             fullName, email, phone, password
         })
-        console.log(newUser)
         await newUser.save()
         const accessToken = generateAccessToken(newUser)
         const refreshToken = generateRefreshToken(newUser)
@@ -36,7 +35,7 @@ export const login = async (req, res) => {
     try {
         const {email, password} = req.body
         const user = await User.findOne({email})
-        if(!user){
+        if(!user){  
             return res.status(404).json({message: 'Invaid User..!'})
         }
         if(user && user.matchPassword(password)){
