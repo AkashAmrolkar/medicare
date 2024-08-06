@@ -1,6 +1,10 @@
 import  { useState } from 'react'
 import  axios from 'axios'
 import { useLoginUserMutation } from '../store/slices/authSlice'
+import { toast, Bounce } from 'react-toastify'
+import signUpImg from '../assets/images/login-banner.png'
+
+
 const Login = () => {
 
   //Initially user value
@@ -23,24 +27,42 @@ const Login = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    await loginUser(userData)
-    setUserData(data);
+    try {
+      const loginUserData = await loginUser(userData)
+      console.log(loginUserData)
+      toast.success('Login successful!');
+      setUserData(data);      
+    } catch (error) {
+      toast.success('Login failed!');
+    }
+    
   }
 
   return (
-    <div className='container py-10 mx-auto'>
-      <div className='h-[70vh] flex justify-center items-center'>
-        <form className='flex flex-col justify-center items-center gap-4 bg-white shadow sm:mx-3 px-10 py-12'>
-          <div className='filed mb-4 flex flex-col gap-2'>
-            <label htmlFor='email'>Email:</label>
-            <input className='h-10 border px-3 border-teal-500 rounded-3xl' id='email' type='text' value={userData.email} onChange={handleChange} name='email' placeholder='Email' required />
-          </div>
-          <div className='filed mb-4 flex flex-col gap-2'>
-            <label htmlFor='password'>Password:</label>
-            <input className='h-10 border px-3 border-teal-500 rounded-3xl' id='password' type='password' value={userData.password} onChange={handleChange} name='password' placeholder='Password' required />
-          </div>
-          <button type='submit' className=' bg-teal-500 border border-transparent rounded-3xl text-xl font-medium text-white px-8 py-2' onClick={handleSubmit}>Login</button>
-        </form>
+
+    <div className='container mx-auto my-12'>
+      <div className=' w-full md:w-[80%] mx-auto flex items-center gap-5 justify-center'>
+        <div className='flex-1 hidden md:block'>
+          <img src={signUpImg} alt="signup" width='auto' height='auto' className='w-full mx-auto' />
+        </div>
+        <div className='flex-1 border border-gray-200 rounded-xl py-8 px-5'>
+          <h1 className=' text-2xl font-medium mb-5'>Login</h1>
+          <form className=''>
+            <div className='filed mb-4 flex flex-col gap-2 w-full md:w-3/5'>
+              <label htmlFor='email'>Email:</label>
+              <input className='h-10 border px-3 border-teal-500 rounded-3xl' id='email' type='text' value={userData.email} onChange={handleChange} name='email' placeholder='john@gmail.com' required />
+            </div>
+            <div className='filed mb-4 flex flex-col gap-2 w-full md:w-3/5'>
+              <label htmlFor='password'>Password:</label>
+              <input className='h-10 border px-3 border-teal-500 rounded-3xl' id='password' type='password' value={userData.password} onChange={handleChange} name='password' placeholder='Password' required />
+            </div>
+            <button type='submit' className=' bg-teal-500 border border-transparent rounded-3xl text-xl font-medium text-white px-8 py-2' onClick={handleSubmit}>
+              {
+                isLoading?'Loading': 'Login'
+              }
+              </button>
+          </form>
+        </div>
       </div>
     </div>
   )

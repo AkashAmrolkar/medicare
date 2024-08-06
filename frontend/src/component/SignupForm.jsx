@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 import { useRegisterUserMutation } from '../store/slices/authSlice'
 
 const SignupForm = () => {
@@ -19,7 +20,8 @@ const SignupForm = () => {
 
     const handleSubmit = async(e)=>{
         e.preventDefault();
-        await registerUser(data)
+        const registerUserData = await registerUser(data)
+        setData(data)
     }
 
   return (
