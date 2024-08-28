@@ -1,4 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
+import { jwtDecode } from 'jwt-decode';
+import { setUser } from './userSlice';
 
 export const authSlice = createApi({
     reducerPath: 'authApi',
@@ -20,9 +22,9 @@ export const authSlice = createApi({
             }),
             async onQueryStarted(args, {dispatch, queryFulfilled}){
                 const {data} = await queryFulfilled;
-                console.log('Store Data: ',data)
                 localStorage.setItem('token', data.accessToken)
-
+                const decodedToken = jwtDecode(data.accessToken)
+                dispatch(setUser(decodedToken))
             }
         }),
 

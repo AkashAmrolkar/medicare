@@ -1,100 +1,99 @@
 
-import logo from '../../assets/images/logo.png';
-import userImg from '../../assets/images/avatar-icon.png'
-import bgImg from '../../assets/images/Blur.png'
-import { NavLink, Link } from 'react-router-dom'
-import { BiMenu } from 'react-icons/bi'
-import { useEffect, useRef } from 'react';
+import React, { useState } from 'react'
+import {Link} from 'react-router-dom'
+import { FaUser, FaLock, FaCaretUp  } from "react-icons/fa";
+import { useSelector, useDispatch } from 'react-redux';
 
-const navlinks =[
-  {
-    name: "Home",
-    link: "/"
-  },
-  {
-    name: "Services",
-    link: "/services"
-  },
-  {
-    name: "Contact",
-    link: "/contact"
-  },
-  {
-    name: "Find Doctor",
-    link: "/doctors"
-  },
-  {
-    name: "SignUp",
-    link: "/register"
-  },
-]
+import logo from '../../assets/images/header-logo.svg'
 
 const Header = () => {
-  
-  const headerRef = useRef(null);
-  const menuRef = useRef(null);
+  const user = useSelector((state) => state.user.user);
 
-  const handleScroll = ()=>{
-    window.addEventListener('scroll', ()=>{
-      if(document.body.scrollTop > 80 || document.documentElement.scrollTop > 80){
-        headerRef.current.classList.add('sticky_header');
-        
-      }
-      {
-        headerRef.current.classList.remove('sticky_header')
-      }
-    })
+  const [showLoginMenu, setShowLoginMenu] = useState(false)
+  const handleLoginMenu = () =>{
+    setShowLoginMenu(!showLoginMenu)
   }
+  window.addEventListener('click', function(){
+    setShowLoginMenu(!showLoginMenu)
+  });
 
-  const toggleMenu = () => {
-    menuRef.current.classList.toggle('show_menu')
-  }
-  useEffect(()=>{
-    handleScroll();
-    return()=> window.removeEventListener('scroll', handleScroll)
-  })
-
-  const token = localStorage.getItem('token')
-  console.log('Token: ', token)
+  const menus = [
+    {
+      menuItem: 'Home',
+      menuLink: '/'
+    },
+    {
+      menuItem: 'About Us',
+      menuLink: '/about'
+    },
+    {
+      menuItem: 'Doctors',
+      menuLink: '/doctors'
+    },
+    {
+      menuItem: 'Contact Us',
+      menuLink: '/contact'
+    },
+  ]
   return (
-    <header className="p-4 bg-repeat bg-cover bg-white shadow mx-auto" ref={headerRef} style={{
-      backgroundImage: `url(${bgImg})`}}>
-      <div className="container mx-auto">
-        <div className='flex items-center justify-between'>
-          <div className='logo'>
-            <img src={logo} />
+    <div className=' py-4 bg-slate-100 shadow-lg'>
+      <div className='container'>
+        <div className=' flex justify-between items-center'>
+          <div>
+            <img src={logo} alt='logo' height='40' width='140' loading='lazy' />
           </div>
-          <div className='navigation hidden sm:hidden md:block lg:block' ref={menuRef} onClick={toggleMenu}>
-            <ul className='menu flex justify-center items-center gap-4'>
-              {
-                navlinks.map((links, index)=>{
-                  return(
-                    <li key={index}>
-                      <NavLink to={links.link} className={navclass=> navclass.isActive? 'text-blue-600 font-semibold border-b border-blue-600 text-base':'text-black font-normal text-base hover:text-blue-600 hover:border-b border-blue-600'}> {links.name} </NavLink>
-                    </li>
-                  )
-                })
-              }
-            </ul>
+          <div className='flex gap-7 font-medium text-lg'>
+            {
+              menus.map((item, index)=>{
+                return(
+                  <Link to={item.menuLink} key={index} className='relative hover:text-primary active:text-primary'>{item.menuItem}</Link>                  
+                )
+}             )
+            }
           </div>
-          <div className='flex items-center gap-4'>
-              <div className='hidden'>
-                <Link to={'/'}>
-                  <figure className=' rounded-full w-[40px] h-[40px]'>
-                    <img src={userImg} alt='user Icon' className='w-full rounded-full' />
-                  </figure>
+          {
+            user ? 
+              <div className=' rounded-full h-10 w-10 border border-slate-900 flex gap-2 cursor-pointer relative' onClick={handleLoginMenu}>
+                {
+                  user.profileImage? <img src={user.profileImage} className='w-10 h-10 object-cover rounded-full' />: <img src='' className='w-10 h-10 object-cover rounded-full' />
+                }
+                <FaCaretUp className=' text-gray-600 h-4 w-4 text-base' />
+                {
+                  showLoginMenu && 
+                <div className='absolute top-16 bg-white px-4 py-6 shadow-lg w-max right-0'>
+                  <div className='flex gap-3 mb-5'>
+                  {
+                    user.profileImage? <img src={user.profileImage} className='w-10 h-10 object-cover rounded-full' />: <img src='' className='w-10 h-10 object-cover rounded-full' />
+                  }
+                  <div>
+                    <h6>{user.userName}</h6>
+                    <p>{user?.role}</p>
+                  </div>
+                  </div>
+                  <div className='flex flex-col'>
+                    <Link to='/dashboard'>Dashboard</Link>
+                    <Link to='/profile'>Profile</Link>
+                    <Link to='/logout'>Logout</Link>
+                  </div>
+                </div>
+                }
+              </div> 
+              : 
+              <div className='flex gap-4'>
+                <Link to='/register'>
+                  <div className='flex gap-1 items-center border border-slate-900 rounded-lg py-3 px-5 hover:bg-primary hover:text-white hover:border-white transition delay-75'><FaUser/><p className=' font-medium text-sm'>Register</p></div>
+                </Link>
+                <Link to='/login'>
+                  <div className='flex gap-1 items-center border border-slate-900 rounded-lg py-3 px-5 hover:bg-primary hover:text-white hover:border-white transition delay-75'><FaLock/><p className=' font-medium text-sm'>Login</p></div>
                 </Link>
               </div>
-              <Link to={'/login'}>
-                <button className='bg-blue-600 px-4 py-2 text-white flex justify-center rounded-[50px] font-bold'>Login</button>
-              </Link>
-          </div>
-          <span className='md:hidden' onClick={toggleMenu}>
-              <BiMenu />
-          </span>
+          
+          }
+          
         </div>
-      </div>      
-    </header>
+      </div>
+
+    </div>
   )
 }
 

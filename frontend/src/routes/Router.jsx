@@ -9,6 +9,7 @@ import Doctors from '../pages/doctors/Doctors'
 import DoctorDetails from '../pages/doctors/DoctorDetails'
 
 import { Routes, Route } from 'react-router-dom'
+import NotFound from '../pages/NotFound'
 
 const Routers = () => {
   return (
@@ -22,6 +23,7 @@ const Routers = () => {
       <Route path='/register' element={<Register />} />
       <Route path='/doctors' element={<Doctors />} />
       <Route path='/doctors/:id' element={<DoctorDetails />} />
+      <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   )
