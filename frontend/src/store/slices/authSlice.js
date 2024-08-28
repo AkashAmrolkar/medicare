@@ -17,7 +17,22 @@ export const authSlice = createApi({
                 url: '/login',
                 method: 'POST',
                 body: userData
-            })
+            }),
+            async onQueryStarted(args, {dispatch, queryFulfilled}){
+                const {data} = await queryFulfilled;
+                console.log('Store Data: ',data)
+                localStorage.setItem('token', data.accessToken)
+
+            }
+        }),
+
+        getUserProfile: builder.mutation({
+          query:()=>({
+            url: '/profile',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+          })
         })
     })
 })

@@ -53,6 +53,9 @@ const Header = () => {
     handleScroll();
     return()=> window.removeEventListener('scroll', handleScroll)
   })
+
+  const token = localStorage.getItem('token')
+  console.log('Token: ', token)
   return (
     <header className="p-4 bg-repeat bg-cover bg-white shadow mx-auto" ref={headerRef} style={{
       backgroundImage: `url(${bgImg})`}}>
@@ -74,7 +77,6 @@ const Header = () => {
               }
             </ul>
           </div>
-
           <div className='flex items-center gap-4'>
               <div className='hidden'>
                 <Link to={'/'}>
@@ -86,7 +88,6 @@ const Header = () => {
               <Link to={'/login'}>
                 <button className='bg-blue-600 px-4 py-2 text-white flex justify-center rounded-[50px] font-bold'>Login</button>
               </Link>
-              
           </div>
           <span className='md:hidden' onClick={toggleMenu}>
               <BiMenu />

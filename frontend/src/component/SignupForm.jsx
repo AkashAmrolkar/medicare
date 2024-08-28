@@ -5,12 +5,13 @@ import { useRegisterUserMutation } from '../store/slices/authSlice'
 const SignupForm = () => {
 
     const [registerUser, {isLoading, isError, isSuccess}] = useRegisterUserMutation()
-    const [data, setData] = useState({
+    const initialUserData = {
         fullName: '',
         email: '',
         phone: '',
         password: '',
-    })
+    }
+    const [data, setData] = useState(initialUserData)
     const handleChange = (e) =>{
         setData({
             ...data,
@@ -20,8 +21,19 @@ const SignupForm = () => {
 
     const handleSubmit = async(e)=>{
         e.preventDefault();
-        const registerUserData = await registerUser(data)
-        setData(data)
+        try {
+            const registerUserData = await registerUser(data)
+            if(isSuccess){
+                toast.success('Registered successful!');
+            }
+            if(isError){
+                toast.error('Registered Failed');
+            }
+            setData(initialUserData)
+        } catch (error) {
+            console.log(error)
+        }
+        
     }
 
   return (
@@ -30,15 +42,23 @@ const SignupForm = () => {
             <input type='text' placeholder='Enter Full Name' value={data.fullName} name='fullName' onChange={handleChange} className='flex-1 p-3 rounded-xl border border-gray-300 focus:outline-none' required />
         </div>
         <div>
-            <input type='email' placeholder='Enter Email' value={data.email} name='email' onChange={handleChange} className='w-full p-3 rounded-xl border border-gray-300 focus:outline-none' required />
-        </div>
+              <input
+                className="w-full p-3 rounded-xl border border-gray-300 focus:outline-none"
+                type="email"
+                name="email"
+                id="email"
+                value={data.email}
+                onChange={handleChange}
+                placeholder='Email'
+                required
+              />        </div>
         <div>
             <input type='text' placeholder='Enter Phone' value={data.phone} name='phone' onChange={handleChange} className='w-full p-3 rounded-xl border border-gray-300 focus:outline-none' required />
         </div>
         <div>
             <input type='password' placeholder='Enter Password' value={data.password} name='password' onChange={handleChange} className='w-full p-3 rounded-xl border border-gray-300 focus:outline-none' required />
         </div>
-        <button className='wifull text-white bg-[#09e5ab] p-3 rounded-xl font-semibold text-lg' onClick={handleSubmit}>Register</button>
+        <button className='wifull text-white bg-[#09e5ab] p-3 rounded-xl font-semibold text-lg opacity-100 disabled:opacity-30' onClick={handleSubmit}  disabled={(!data.email || !data.fullName || !data.phone|| !data.password)}>Register</button>
     </form>
   )
 }
