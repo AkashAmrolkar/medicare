@@ -64,3 +64,8 @@ export const refreshToken = async (req,res)=>{
         res.json({accessToken})
     })
 }
+
+export const logout = async(req, res)=>{
+    const token = req.body;
+    console.log(token)
+}

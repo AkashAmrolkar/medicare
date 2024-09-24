@@ -1,21 +1,49 @@
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {Link} from 'react-router-dom'
 import { FaUser, FaLock, FaCaretUp  } from "react-icons/fa";
 import { useSelector, useDispatch } from 'react-redux';
+import { useLogoutMutation } from '../../store/slices/authSlice';
+import { setUser, clearUser } from '../../store/slices/userSlice'; // Ensure to import setUser and clearUser
+import {jwtDecode} from 'jwt-decode'; // Import jwtDecode to decode token
 
 import logo from '../../assets/images/header-logo.svg'
 
 const Header = () => {
+  const dispatch = useDispatch()
+  console.log(dispatch)
   const user = useSelector((state) => state.user.user);
+  const [logout, {isSuccess, isError, isLoading}] = useLogoutMutation();
+
 
   const [showLoginMenu, setShowLoginMenu] = useState(false)
   const handleLoginMenu = () =>{
     setShowLoginMenu(!showLoginMenu)
   }
-  window.addEventListener('click', function(){
-    setShowLoginMenu(!showLoginMenu)
-  });
+
+  // Check for token in localStorage on component mount
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        dispatch(setUser(decodedToken)); // Set user from the token
+      } catch (error) {
+        console.log('Invalid token:', error);
+        dispatch(clearUser());
+        localStorage.removeItem('token'); // Clear invalid token
+      }
+    }
+  }, [dispatch]);
+
+  const handleLogout = async() =>{
+    try {
+      const logoutUser = await logout();
+      console.log(logoutUser)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const menus = [
     {
@@ -73,7 +101,7 @@ const Header = () => {
                   <div className='flex flex-col'>
                     <Link to='/dashboard'>Dashboard</Link>
                     <Link to='/profile'>Profile</Link>
-                    <Link to='/logout'>Logout</Link>
+                    <div onClick={handleLogout} className='border border-slate-900 rounded-lg py-3 px-5 hover:bg-primary hover:text-white hover:border-white transition delay-75'><p className=' font-medium text-sm'>Logout</p></div>
                   </div>
                 </div>
                 }

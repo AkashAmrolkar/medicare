@@ -10,6 +10,7 @@ import DoctorDetails from '../pages/doctors/DoctorDetails'
 
 import { Routes, Route } from 'react-router-dom'
 import NotFound from '../pages/NotFound'
+import Logout from '../pages/Logout'
 
 const Routers = () => {
   return (
@@ -22,6 +23,7 @@ const Routers = () => {
       <Route path='/services' element={<Services />} />
       <Route path='/register' element={<Register />} />
       <Route path='/doctors' element={<Doctors />} />
+      <Route path='/logout' element={<Logout />} />
       <Route path='/doctors/:id' element={<DoctorDetails />} />
       <Route path="*" element={<NotFound />} />
       </Routes>
